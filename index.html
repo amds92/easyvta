@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Easy VTA — Precision Tonearm Adjustment Tools</title>
+<meta name="description" content="Precision VTA adjustment devices for audiophiles. Micrometric control of your tonearm's Vertical Tracking Angle — on the fly. For Rega, Jelco, Clearaudio, Thomas Schick and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white:   #FFFFFF;
+  --cream:   #FAF8F4;
+  --cream2:  #F4F1EA;
+  --linen:   #EDE9DF;
+  --border:  #E0DBD0;
+  --mid:     #B8B3A8;
+  --text:    #2C2820;
+  --muted:   #6B6560;
+  --dim:     #A09A92;
+  --amber:   #C8820A;
+  --amber2:  #E09A20;
+  --amber3:  #F5B030;
+  --amber-bg:#FFF8E8;
+  --amber-br:#F0D898;
+  --green:   #2D7A4A;
+  --green-bg:#EEF7F2;
+  --red:     #B83A2A;
+  --silver:  #8A8A8A;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --fh: 'Libre Baskerville', Georgia, serif;
+  --fm: 'DM Mono', monospace;
+  --max: 1180px;
+  --r: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--white);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 36px; }
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--amber); padding: 10px 0; text-align: center;
+}
+.topbar p {
+  font-family: var(--fb); font-size: 13px; font-weight: 500;
+  color: var(--white); letter-spacing: 0.02em;
+}
+.topbar a { color: var(--white); font-weight: 600; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  transition: box-shadow 0.3s;
+}
+nav.stuck { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-vinyl {
+  width: 38px; height: 38px; background: var(--text);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.nav-logo-vinyl::after {
+  content: '';
+  width: 12px; height: 12px; background: var(--amber);
+  border-radius: 50%; position: absolute;
+}
+.nav-logo-text { display: flex; flex-direction: column; gap: 1px; }
+.nav-logo-main { font-family: var(--fh); font-size: 19px; font-weight: 700; color: var(--text); line-height: 1; }
+.nav-logo-sub { font-family: var(--fm); font-size: 9px; color: var(--dim); letter-spacing: 0.2em; text-transform: uppercase; }
+
+.nav-links { display: flex; align-items: center; list-style: none; }
+.nav-links a {
+  font-size: 13.5px; font-weight: 500; color: var(--muted);
+  text-decoration: none; padding: 8px 16px; border-radius: var(--r);
+  transition: 0.2s;
+}
+.nav-links a:hover { color: var(--text); background: var(--cream); }
+.nav-cta {
+  background: var(--amber) !important; color: var(--white) !important;
+  font-weight: 600 !important; margin-left: 8px; padding: 10px 22px !important;
+}
+.nav-cta:hover { background: var(--amber2) !important; }
+
+.burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+.burger span { display: block; width: 22px; height: 1.5px; background: var(--text); border-radius: 2px; }
+
+/* ── HERO ── */
+.hero {
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 0 0;
+  position: relative; overflow: hidden;
+}
+.hero-row { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fm); font-size: 11px; color: var(--amber);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 22px;
+  animation: up 0.6s ease both;
+}
+.hero-kicker::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amber); }
+
+.hero-title {
+  font-family: var(--fh); font-weight: 700;
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1.08; letter-spacing: -0.5px;
+  color: var(--text); margin-bottom: 22px;
+  animation: up 0.6s 0.1s ease both;
+}
+.hero-title em { font-style: italic; color: var(--amber); }
+
+.hero-sub {
+  font-size: 17px; font-weight: 300; color: var(--muted);
+  line-height: 1.8; max-width: 460px; margin-bottom: 40px;
+  animation: up 0.6s 0.15s ease both;
+}
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; animation: up 0.6s 0.2s ease both; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fb); font-size: 14px; font-weight: 600;
+  padding: 13px 26px; border-radius: var(--r);
+  text-decoration: none; transition: 0.2s; white-space: nowrap; cursor: pointer;
+}
+.btn-amber { background: var(--amber); color: var(--white); border: none; }
+.btn-amber:hover { background: var(--amber2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,130,10,0.25); }
+.btn-amber svg { transition: transform 0.2s; }
+.btn-amber:hover svg { transform: translateX(3px); }
+.btn-outline { border: 1.5px solid var(--border); color: var(--muted); background: transparent; }
+.btn-outline:hover { border-color: var(--amber); color: var(--amber); background: var(--amber-bg); }
+
+.hero-proof {
+  display: flex; gap: 32px; margin-top: 48px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+  animation: up 0.6s 0.25s ease both;
+}
+.hero-proof-item { display: flex; align-items: center; gap: 8px; }
+.hero-proof-icon { font-size: 16px; }
+.hero-proof-text { font-size: 13px; font-weight: 400; color: var(--muted); }
+.hero-proof-text strong { color: var(--text); font-weight: 600; }
+
+/* Hero right — product image area */
+.hero-img-wrap {
+  position: relative; animation: up 0.7s 0.2s ease both;
+  display: flex; align-items: flex-end;
+}
+.hero-product-frame {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 16px 16px 0 0; overflow: hidden;
+  width: 100%; position: relative;
+}
+.hero-product-photo {
+  height: 380px; background: var(--linen);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-product-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+.hero-product-photo-placeholder {
+  text-align: center; padding: 40px;
+}
+.hero-product-photo-placeholder span { font-size: 80px; display: block; margin-bottom: 12px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1)); }
+.hero-product-photo-placeholder p { font-family: var(--fm); font-size: 11px; color: var(--dim); letter-spacing: 0.15em; }
+.hero-product-meta {
+  padding: 20px 24px; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-product-from { font-family: var(--fm); font-size: 11px; color: var(--dim); letter-spacing: 0.08em; }
+.hero-product-price { font-family: var(--fh); font-size: 22px; font-weight: 700; color: var(--amber); }
+.hero-product-price span { font-family: var(--fb); font-size: 12px; color: var(--mid); font-weight: 400; text-decoration: line-through; margin-left: 6px; }
+
+/* Stats strip */
+.hero-stats {
+  background: var(--text); padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hero-stats-inner { display: flex; justify-content: space-around; align-items: center; }
+.hstat-val { font-family: var(--fh); font-size: 30px; font-weight: 700; color: var(--white); line-height: 1; }
+.hstat-val sup { font-size: 14px; color: var(--amber3); }
+.hstat-label { font-family: var(--fm); font-size: 10px; color: var(--mid); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 5px; }
+.hstat-div { width: 1px; height: 36px; background: rgba(255,255,255,0.1); }
+
+/* ── SECTIONS ── */
+section { padding: 88px 0; position: relative; }
+
+.stag {
+  font-family: var(--fm); font-size: 11px; color: var(--amber);
+  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.stag::before { content: ''; display: block; width: 18px; height: 1px; background: var(--amber); }
+
+.stitle {
+  font-family: var(--fh); font-weight: 700;
+  font-size: clamp(26px, 3.2vw, 40px);
+  line-height: 1.15; letter-spacing: -0.3px; color: var(--text); margin-bottom: 14px;
+}
+.stitle em { font-style: italic; color: var(--amber); }
+.ssub { font-size: 16px; font-weight: 300; color: var(--muted); max-width: 500px; line-height: 1.8; }
+
+/* ── WHAT IS VTA ── */
+.what { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.what-row { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+
+.what-items { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.what-item {
+  display: flex; gap: 16px; padding: 20px;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--r); transition: border-color 0.2s, box-shadow 0.2s;
+}
+.what-item:hover { border-color: var(--amber-br); box-shadow: 0 2px 12px rgba(200,130,10,0.08); }
+.what-num {
+  font-family: var(--fm); font-size: 11px; color: var(--amber);
+  background: var(--amber-bg); border: 1px solid var(--amber-br);
+  border-radius: 5px; padding: 3px 8px; height: fit-content; flex-shrink: 0; letter-spacing: 0.05em;
+}
+.what-item-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+.what-item-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+.video-wrap { border-radius: var(--r); overflow: hidden; position: relative; padding-bottom: 56.25%; height: 0; border: 1px solid var(--border); margin-top: 32px; }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.video-cap { font-family: var(--fm); font-size: 11px; color: var(--dim); text-align: center; margin-top: 10px; letter-spacing: 0.05em; }
+
+/* ── FINDER ── */
+.finder { border-top: 1px solid var(--border); }
+.finder-box {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 14px; padding: 44px; margin-top: 44px;
+}
+.finder-head { font-family: var(--fh); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.finder-sub { font-family: var(--fm); font-size: 11px; color: var(--dim); letter-spacing: 0.08em; margin-bottom: 24px; }
+.finder-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.finder-sel {
+  flex: 1; min-width: 240px;
+  background: var(--white); border: 1.5px solid var(--border);
+  color: var(--text); font-family: var(--fb); font-size: 14px;
+  padding: 12px 16px; border-radius: var(--r); outline: none; cursor: pointer;
+  transition: border-color 0.2s; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px;
+}
+.finder-sel:focus { border-color: var(--amber); }
+.finder-btn {
+  background: var(--amber); color: var(--white); font-family: var(--fb);
+  font-size: 14px; font-weight: 600; padding: 12px 24px; border: none;
+  border-radius: var(--r); cursor: pointer; transition: 0.2s; white-space: nowrap;
+}
+.finder-btn:hover { background: var(--amber2); }
+.finder-result {
+  display: none; margin-top: 24px; padding: 20px 24px;
+  background: var(--white); border: 1px solid var(--amber-br);
+  border-radius: var(--r); border-left: 3px solid var(--amber);
+}
+.finder-result.show { display: block; }
+.finder-res-tag { font-family: var(--fm); font-size: 10px; color: var(--amber); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px; }
+.finder-res-title { font-family: var(--fh); font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.finder-res-desc { font-size: 14px; color: var(--muted); margin-bottom: 14px; font-weight: 300; }
+.finder-res-price { font-family: var(--fm); font-size: 20px; color: var(--amber); font-weight: 500; }
+
+/* ── PRODUCTS ── */
+.products { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.products-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
+.prod-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+.prod-card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 28px; position: relative;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.prod-card:hover { border-color: var(--amber-br); box-shadow: 0 4px 24px rgba(200,130,10,0.1); transform: translateY(-2px); }
+.prod-card.oos { opacity: 0.55; }
+.prod-card.featured { border-color: var(--amber-br); background: var(--amber-bg); }
+
+.prod-tag {
+  position: absolute; top: 16px; right: 16px;
+  font-family: var(--fm); font-size: 9px; letter-spacing: 0.15em;
+  padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
+}
+.tag-in { background: var(--green-bg); color: var(--green); border: 1px solid rgba(45,122,74,0.25); }
+.tag-out { background: #FEF2F2; color: var(--red); border: 1px solid rgba(184,58,42,0.2); }
+.tag-feat { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-br); }
+
+.prod-shaft { font-family: var(--fm); font-size: 11px; color: var(--dim); letter-spacing: 0.08em; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.prod-shaft::before { content: '⌀'; color: var(--amber); }
+.prod-name { font-family: var(--fh); font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+.prod-compat { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.65; margin-bottom: 18px; }
+.prod-price { font-family: var(--fh); font-size: 24px; font-weight: 700; color: var(--amber); margin-bottom: 3px; }
+.prod-ship { font-size: 11px; font-weight: 500; color: var(--green); margin-bottom: 18px; }
+.prod-actions { display: flex; gap: 8px; }
+.prod-btn {
+  flex: 1; padding: 10px; border-radius: 6px; font-family: var(--fb);
+  font-size: 12px; font-weight: 600; text-align: center;
+  text-decoration: none; cursor: pointer; border: none;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: 0.2s;
+}
+.prod-btn-main { background: var(--amber); color: var(--white); }
+.prod-btn-main:hover { background: var(--amber2); }
+.prod-btn-ebay { background: var(--cream); color: var(--muted); border: 1.5px solid var(--border); font-size: 11px; }
+.prod-btn-ebay:hover { border-color: var(--text); color: var(--text); }
+.prod-btn-notify { background: var(--cream2); color: var(--dim); border: 1.5px solid var(--border); }
+.prod-empty {
+  background: var(--cream); border: 1.5px dashed var(--border);
+  border-radius: 12px; padding: 40px 28px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.prod-empty p { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+/* ── FEATURES ── */
+.features { border-top: 1px solid var(--border); }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 48px; }
+.feat-card {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px; transition: border-color 0.2s;
+}
+.feat-card:hover { border-color: var(--amber-br); }
+.feat-icon { font-size: 26px; margin-bottom: 14px; }
+.feat-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+.feat-desc { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.75; }
+.feat-spec { font-family: var(--fm); font-size: 10px; color: var(--amber); margin-top: 11px; letter-spacing: 0.07em; }
+
+/* ── INSTALL ── */
+.install { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.install-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 44px; }
+.install-step {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 22px; transition: border-color 0.2s;
+}
+.install-step:hover { border-color: var(--amber-br); }
+.install-num { font-family: var(--fh); font-size: 40px; font-weight: 700; color: var(--amber-br); line-height: 1; margin-bottom: 14px; }
+.install-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 7px; }
+.install-desc { font-size: 12px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+/* ── REVIEWS ── */
+.reviews { border-top: 1px solid var(--border); }
+.rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+.rev-card {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; transition: border-color 0.2s;
+}
+.rev-card:hover { border-color: var(--amber-br); }
+.rev-stars { color: var(--amber); font-size: 13px; letter-spacing: 2px; margin-bottom: 12px; }
+.rev-text { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.75; font-style: italic; margin-bottom: 16px; }
+.rev-author { font-family: var(--fm); font-size: 11px; color: var(--text); letter-spacing: 0.06em; }
+.rev-source { font-family: var(--fm); font-size: 10px; color: var(--dim); margin-top: 2px; }
+
+/* ── FAQ ── */
+.faq { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.faq-list { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 44px; }
+.faq-item { background: var(--white); border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+.faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; gap: 16px; transition: background 0.2s; }
+.faq-q:hover { background: var(--cream); }
+.faq-q-text { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.4; }
+.faq-icon { font-size: 20px; color: var(--amber); flex-shrink: 0; transition: transform 0.3s; font-weight: 300; }
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a { display: none; padding: 0 24px 20px; font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.8; border-top: 1px solid var(--border); padding-top: 16px; }
+.faq-a code { font-family: var(--fm); font-size: 12px; background: var(--amber-bg); padding: 2px 6px; border-radius: 4px; color: var(--amber); }
+.faq-item.open .faq-a { display: block; }
+
+/* ── PAYMENT COMING SOON ── */
+.payment { border-top: 1px solid var(--border); }
+.payment-box {
+  background: var(--cream); border: 1px solid var(--border);
+  border-radius: 16px; padding: 56px; text-align: center; margin-top: 44px;
+  position: relative; overflow: hidden;
+}
+.payment-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--amber), var(--amber3));
+}
+.payment-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--amber-bg); border: 1px solid var(--amber-br);
+  border-radius: 100px; padding: 6px 16px;
+  font-family: var(--fm); font-size: 11px; color: var(--amber);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 22px;
+}
+.badge-pulse { width: 6px; height: 6px; background: var(--amber); border-radius: 50%; animation: pulse 2s infinite; }
+.payment-title { font-family: var(--fh); font-size: clamp(24px, 3vw, 38px); font-weight: 700; color: var(--text); margin-bottom: 12px; }
+.payment-sub { font-size: 16px; font-weight: 300; color: var(--muted); max-width: 480px; margin: 0 auto 36px; line-height: 1.8; }
+.payment-methods { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+.payment-method {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 13px 18px; opacity: 0.6;
+}
+.pm-icon { font-size: 20px; }
+.pm-label { font-size: 14px; font-weight: 600; color: var(--text); }
+.pm-sub { font-family: var(--fm); font-size: 10px; color: var(--dim); }
+.payment-notify { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.payment-notify input {
+  background: var(--white); border: 1.5px solid var(--border);
+  color: var(--text); font-family: var(--fb); font-size: 14px;
+  padding: 12px 16px; border-radius: var(--r); outline: none; width: 280px;
+  transition: border-color 0.2s;
+}
+.payment-notify input::placeholder { color: var(--dim); }
+.payment-notify input:focus { border-color: var(--amber); }
+.payment-notify-btn {
+  background: var(--amber); color: var(--white); font-family: var(--fb);
+  font-size: 14px; font-weight: 600; padding: 12px 22px;
+  border: none; border-radius: var(--r); cursor: pointer; transition: 0.2s;
+}
+.payment-notify-btn:hover { background: var(--amber2); }
+.payment-current { margin-top: 20px; font-size: 13px; color: var(--dim); }
+.payment-current a { color: var(--amber); text-decoration: none; font-weight: 500; }
+
+/* ── ABOUT ── */
+.about { background: var(--cream); border-top: 1px solid var(--border); }
+.about-row { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-text p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.85; margin-bottom: 18px; }
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-quote {
+  font-family: var(--fh); font-size: 18px; font-style: italic;
+  color: var(--text); line-height: 1.6;
+  border-left: 3px solid var(--amber); padding-left: 20px;
+  margin-bottom: 24px;
+}
+.about-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+.afact { background: var(--white); padding: 26px 22px; text-align: center; transition: background 0.2s; }
+.afact:hover { background: var(--amber-bg); }
+.afact-n { font-family: var(--fh); font-size: 36px; font-weight: 700; color: var(--amber); letter-spacing: -1px; line-height: 1; }
+.afact-n sup { font-size: 16px; }
+.afact-l { font-size: 11px; font-weight: 400; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 6px; }
+
+/* ── CONTACT ── */
+.contact { border-top: 1px solid var(--border); }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; }
+.cinfo-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.cinfo-icon { width: 36px; height: 36px; background: var(--cream); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; transition: border-color 0.2s; }
+.cinfo-item:hover .cinfo-icon { border-color: var(--amber); background: var(--amber-bg); }
+.cinfo-label { font-family: var(--fm); font-size: 10px; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 3px; }
+.cinfo-val { font-size: 15px; color: var(--text); }
+.cinfo-val a { color: var(--text); text-decoration: none; }
+.cinfo-val a:hover { color: var(--amber); }
+.order-note { margin-top: 24px; background: var(--amber-bg); border: 1px solid var(--amber-br); border-radius: var(--r); padding: 18px 20px; }
+.order-note-title { font-family: var(--fm); font-size: 11px; color: var(--amber); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+.order-note p { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+.cform { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 32px; }
+.cform-title { font-family: var(--fh); font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 22px; }
+.fg { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.fg label { font-family: var(--fm); font-size: 10px; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; }
+.fg input, .fg select, .fg textarea {
+  background: var(--white); border: 1.5px solid var(--border);
+  color: var(--text); font-family: var(--fb); font-size: 14px; font-weight: 300;
+  padding: 11px 14px; border-radius: var(--r); outline: none; width: 100%;
+  transition: border-color 0.2s;
+}
+.fg input::placeholder, .fg textarea::placeholder { color: var(--dim); }
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--amber); }
+.fg textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+.fg select { appearance: none; cursor: pointer; }
+.cform-btn {
+  width: 100%; padding: 13px; background: var(--amber); color: var(--white);
+  font-family: var(--fb); font-size: 14px; font-weight: 600;
+  border: none; border-radius: var(--r); cursor: pointer; transition: 0.2s; margin-top: 6px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.cform-btn:hover { background: var(--amber2); transform: translateY(-1px); }
+.cform-success { display: none; text-align: center; padding: 32px 0; }
+
+/* ── FOOTER ── */
+footer { background: var(--text); padding: 48px 0 28px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 40px; }
+.footer-brand-logo { font-family: var(--fh); font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+.footer-brand-desc { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.4); line-height: 1.75; max-width: 260px; }
+.footer-col-title { font-family: var(--fm); font-size: 10px; color: var(--amber); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 14px; }
+.footer-col-links { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.footer-col-links a { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-col-links a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; gap: 12px; }
+.footer-copy { font-family: var(--fm); font-size: 11px; color: rgba(255,255,255,0.25); }
+.footer-ebay a { font-family: var(--fm); font-size: 11px; color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-ebay a:hover { color: var(--amber); }
+
+/* ── MOBILE MENU ── */
+.mob-menu { display: none; position: fixed; inset: 0; background: var(--white); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+.mob-menu.open { display: flex; }
+.mob-menu a { font-family: var(--fh); font-size: 28px; font-weight: 700; color: var(--text); text-decoration: none; padding: 10px 24px; transition: color 0.2s; }
+.mob-menu a:hover { color: var(--amber); }
+.mob-x { position: absolute; top: 24px; right: 28px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--muted); }
+
+/* ── ANIMATIONS ── */
+@keyframes up { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px) {
+  .hero-row,.what-row,.about-row,.contact-row { grid-template-columns:1fr; gap:48px; }
+  .footer-grid { grid-template-columns:1fr 1fr; gap:36px; }
+}
+@media(max-width:900px) {
+  .nav-links { display:none; }
+  .burger { display:flex; }
+  .prod-grid { grid-template-columns:repeat(2,1fr); }
+  .feat-grid { grid-template-columns:repeat(2,1fr); }
+  .install-steps { grid-template-columns:repeat(2,1fr); }
+  .rev-grid { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:600px) {
+  .wrap { padding:0 20px; }
+  .prod-grid,.feat-grid,.install-steps,.rev-grid { grid-template-columns:1fr; }
+  .footer-grid { grid-template-columns:1fr; }
+  .about-facts { grid-template-columns:1fr 1fr; }
+  .hero-stats-inner { flex-wrap:wrap; gap:20px; justify-content:center; }
+  .hero-proof { flex-wrap:wrap; gap:12px; }
+  .payment-notify { flex-direction:column; align-items:center; }
+  .payment-notify input { width:100%; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile menu -->
+<div class="mob-menu" id="mob">
+  <button class="mob-x" onclick="closeMob()">✕</button>
+  <a href="#what-is" onclick="closeMob()">What is VTA</a>
+  <a href="#finder" onclick="closeMob()">Find Mine</a>
+  <a href="#products" onclick="closeMob()">Products</a>
+  <a href="#reviews" onclick="closeMob()">Reviews</a>
+  <a href="#faq" onclick="closeMob()">FAQ</a>
+  <a href="#contact" onclick="closeMob()" style="color:var(--amber);margin-top:12px;">Contact</a>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <p>🎵 <strong>Lower prices when ordering direct</strong> — no eBay fees. Free worldwide shipping on all orders. <a href="#products">Shop now →</a></p>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-vinyl"></div>
+        <div class="nav-logo-text">
+          <div class="nav-logo-main">Easy VTA</div>
+          <div class="nav-logo-sub">Improving Sound</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#what-is">What is VTA</a></li>
+        <li><a href="#finder">Find Mine</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#products" class="nav-cta">Shop Now</a></li>
+      </ul>
+      <div class="burger" onclick="openMob()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-row">
+      <div>
+        <div class="hero-kicker">Precision Tonearm Tools · Handcrafted in Portugal</div>
+        <h1 class="hero-title">
+          Find your tonearm's<br><em>perfect angle.</em><br>On the fly.
+        </h1>
+        <p class="hero-sub">Micrometric VTA adjustment devices for serious audiophiles. Adjust the Vertical Tracking Angle while the record is playing — and hear the difference in real time.</p>
+        <div class="hero-btns">
+          <a href="#products" class="btn btn-amber">
+            Shop Products
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#finder" class="btn btn-outline">Find my model →</a>
+        </div>
+        <div class="hero-proof">
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>6061 Aluminium</strong> alloy body</span></div>
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>Military-spec</strong> anodized finish</span></div>
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>Free</strong> worldwide shipping</span></div>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <div class="hero-product-frame">
+          <div class="hero-product-photo">
+            <div class="hero-product-photo-placeholder">
+              <span>🎚️</span>
+              <p>VTA ADJUSTMENT DEVICE</p>
+            </div>
+          </div>
+          <div class="hero-product-meta">
+            <div class="hero-product-from">// Starting from</div>
+            <div class="hero-product-price">£149 <span>eBay £165+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="wrap">
+      <div class="hero-stats-inner">
+        <div><div class="hstat-val">6061</div><div class="hstat-label">Aluminium Grade</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">MIL<sup>-SPEC</sup></div><div class="hstat-label">Anodized Finish</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">µm</div><div class="hstat-label">Micrometric Precision</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">8<sup>+</sup></div><div class="hstat-label">Tonearm Models</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">Free</div><div class="hstat-label">Worldwide Shipping</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT IS VTA ══ -->
+<section class="what" id="what-is">
+  <div class="wrap">
+    <div class="what-row">
+      <div class="reveal">
+        <div class="stag">Understanding VTA</div>
+        <h2 class="stitle">Why does the<br><em>angle matter?</em></h2>
+        <p class="ssub">Your stylus reads the groove at a specific angle. Getting it exactly right — for each record — is the difference between good and extraordinary sound.</p>
+        <div class="what-items">
+          <div class="what-item">
+            <div class="what-num">VTA</div>
+            <div>
+              <div class="what-item-title">Vertical Tracking Angle</div>
+              <p class="what-item-desc">The angle the tonearm makes with the record surface when viewed from the side. Deviations of even fractions of a millimetre affect clarity, tonal balance and soundstage.</p>
+            </div>
+          </div>
+          <div class="what-item">
+            <div class="what-num">SRA</div>
+            <div>
+              <div class="what-item-title">Stylus Rake Angle</div>
+              <p class="what-item-desc">The angle of the stylus contact relative to the groove — ideally 92°. When wrong, you'll hear harshness, reduced bass definition, and a collapsed soundstage.</p>
+            </div>
+          </div>
+          <div class="what-item">
+            <div class="what-num">FLY</div>
+            <div>
+              <div class="what-item-title">On the Fly Adjustment</div>
+              <p class="what-item-desc">Easy VTA lets you adjust while the record plays. Hear the change in real time. Finding the "sweet spot" has never been this precise or enjoyable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/mRUqiiXkmSM" title="Easy VTA in action" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="video-cap">Watch Easy VTA in action — on the fly VTA adjustment while playing vinyl</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINDER ══ -->
+<section class="finder" id="finder">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Compatibility</div>
+      <h2 class="stitle">Which device<br>is <em>right for you?</em></h2>
+      <p class="ssub">Select your tonearm and we'll find the exact Easy VTA device you need.</p>
+    </div>
+    <div class="finder-box reveal">
+      <div class="finder-head">Tonearm Compatibility Finder</div>
+      <div class="finder-sub">SELECT YOUR TONEARM MODEL BELOW</div>
+      <div class="finder-row">
+        <select class="finder-sel" id="finderSel">
+          <option value="">— Select your tonearm —</option>
+          <option value="rega">Rega RB-330</option>
+          <option value="jelco">Jelco SA-750D / Ortofon AS-309R</option>
+          <option value="sumiko">Sumiko Premier MMT</option>
+          <option value="groovemaster">GrooveMaster (Jelco base)</option>
+          <option value="schick">Thomas Schick</option>
+          <option value="clearaudio">Clearaudio (Satisfy, Unify, Performance)</option>
+          <option value="sorane">Sorane SA-1.2 / TA-1</option>
+          <option value="sme">SME / Sliding Mounting Base</option>
+        </select>
+        <button class="finder-btn" onclick="findProduct()">Find My Device →</button>
+      </div>
+      <div class="finder-result" id="finderResult">
+        <div class="finder-res-tag">Recommended Device</div>
+        <div class="finder-res-title" id="frTitle"></div>
+        <div class="finder-res-desc" id="frDesc"></div>
+        <div class="finder-res-price" id="frPrice"></div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="#products" class="btn btn-amber" style="font-size:13px;padding:10px 20px;">View Product</a>
+          <a href="mailto:query@easyvta.net" class="btn btn-outline" style="font-size:13px;padding:10px 20px;">Ask a Question</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTS ══ -->
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="products-header reveal">
+      <div>
+        <div class="stag">Shop</div>
+        <h2 class="stitle">All <em>Products.</em></h2>
+      </div>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;max-width:320px;line-height:1.7;">Direct purchase is cheaper than eBay — same product, same service, no platform fees.</p>
+    </div>
+    <div class="prod-grid reveal">
+
+      <div class="prod-card">
+        <span class="prod-tag tag-in">In Stock</span>
+        <div class="prod-shaft">3-point fixing</div>
+        <div class="prod-name">For Rega RB-330</div>
+        <p class="prod-compat">Designed for the Rega RB-330 tonearm with 3-point armboard fixing.</p>
+        <div class="prod-price">£150</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: Rega RB-330 VTA Device&body=Hi, I'd like to order the Easy VTA device for Rega RB-330. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <span class="prod-tag tag-in">In Stock</span>
+        <div class="prod-shaft">18mm shaft</div>
+        <div class="prod-name">For Jelco SA-750D & Ortofon AS-309R</div>
+        <p class="prod-compat">18mm pillar shaft. Also fits the Ortofon AS-309R tonearm.</p>
+        <div class="prod-price">£149</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: Jelco SA-750D VTA Device&body=Hi, I'd like to order the Easy VTA device for Jelco SA-750D. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <span class="prod-tag tag-in">In Stock</span>
+        <div class="prod-shaft">16mm shaft</div>
+        <div class="prod-name">For Sumiko Premier MMT</div>
+        <p class="prod-compat">16mm pillar shaft. Precision fit for the Sumiko Premier MMT tonearm.</p>
+        <div class="prod-price">£149</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: Sumiko Premier MMT VTA Device&body=Hi, I'd like to order the Easy VTA device for Sumiko Premier MMT. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <span class="prod-tag tag-in">In Stock</span>
+        <div class="prod-shaft">20.5mm shaft</div>
+        <div class="prod-name">For GrooveMaster</div>
+        <p class="prod-compat">20.5mm shaft. For GrooveMaster tonearms with Jelco base.</p>
+        <div class="prod-price">£175</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: GrooveMaster VTA Device&body=Hi, I'd like to order the Easy VTA device for GrooveMaster. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card">
+        <span class="prod-tag tag-in">In Stock</span>
+        <div class="prod-shaft">19mm shaft</div>
+        <div class="prod-name">For Thomas Schick</div>
+        <p class="prod-compat">19mm pillar shaft. Precision-engineered for the Thomas Schick tonearm.</p>
+        <div class="prod-price">£175</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: Thomas Schick VTA Device&body=Hi, I'd like to order the Easy VTA device for Thomas Schick. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card featured">
+        <span class="prod-tag tag-feat">Premium</span>
+        <div class="prod-shaft">20.5mm shaft</div>
+        <div class="prod-name">Sliding Mounting Base</div>
+        <p class="prod-compat">20.5mm shaft. Premium sliding design for maximum adjustability.</p>
+        <div class="prod-price">£225</div>
+        <div class="prod-ship">✓ Free Worldwide Shipping</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Order: Sliding Mounting Base VTA Device&body=Hi, I'd like to order the Sliding Mounting Base VTA device. Please send payment details." class="prod-btn prod-btn-main">Order Direct</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+        </div>
+      </div>
+
+      <div class="prod-card oos">
+        <span class="prod-tag tag-out">Out of Stock</span>
+        <div class="prod-shaft">25mm shaft</div>
+        <div class="prod-name">For Clearaudio (Satisfy, Unify, Performance)</div>
+        <p class="prod-compat">25mm shaft. Compatible with Clearaudio Satisfy, Unify and Performance.</p>
+        <div class="prod-price">£235</div>
+        <div class="prod-ship" style="color:var(--dim);">Currently unavailable</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Notify: Clearaudio VTA back in stock" class="prod-btn prod-btn-notify">Notify Me</a>
+        </div>
+      </div>
+
+      <div class="prod-card oos">
+        <span class="prod-tag tag-out">Out of Stock</span>
+        <div class="prod-shaft">20mm shaft</div>
+        <div class="prod-name">For Sorane SA-1.2 / TA-1</div>
+        <p class="prod-compat">20mm shaft. For Sorane SA-1.2 and TA-1 tonearms.</p>
+        <div class="prod-price">£175</div>
+        <div class="prod-ship" style="color:var(--dim);">Currently unavailable</div>
+        <div class="prod-actions">
+          <a href="mailto:query@easyvta.net?subject=Notify: Sorane VTA back in stock" class="prod-btn prod-btn-notify">Notify Me</a>
+        </div>
+      </div>
+
+      <div class="prod-empty">
+        <span style="font-size:36px;">🎵</span>
+        <div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text);">Don't see yours?</div>
+        <p>Use the compatibility finder above or contact us — we'll help you find the right device for your setup.</p>
+        <a href="#finder" class="btn btn-amber" style="font-size:13px;padding:10px 20px;">Use Finder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Engineering</div>
+      <h2 class="stitle">Built for<br><em>precision.</em></h2>
+      <p class="ssub">Every Easy VTA device is machined to exacting standards — because the difference between good and extraordinary is measured in micrometres.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">⚙️</div>
+        <div class="feat-title">6061 Aluminium Alloy</div>
+        <p class="feat-desc">Aerospace-grade aluminium to ASTM B 209 standard. Rigid, lightweight, and resonance-free — it won't colour your sound.</p>
+        <div class="feat-spec">ASTM B 209 STANDARD</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">✨</div>
+        <div class="feat-title">Military-Grade Finish</div>
+        <p class="feat-desc">Glass bead blasting followed by MIL-A-8625 Type II anodizing. Hard, durable, and beautiful — looks as precise as it performs.</p>
+        <div class="feat-spec">MIL-A-8625 TYPE II</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔬</div>
+        <div class="feat-title">Micrometric Adjustment</div>
+        <p class="feat-desc">Custom micrometer with inverted analogue scale readout. Precise, repeatable increments — and return to any position at any time.</p>
+        <div class="feat-spec">INVERTED ANALOGUE READOUT</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎵</div>
+        <div class="feat-title">VTA on the Fly</div>
+        <p class="feat-desc">Two precision linear bearings create a rattle-free mechanism that adjusts while the record plays. Hear the sweet spot in real time.</p>
+        <div class="feat-spec">DUAL LINEAR BEARING SYSTEM</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔧</div>
+        <div class="feat-title">No Tools Required</div>
+        <p class="feat-desc">Installs in minutes without any special tools. Creates a rigid, tight coupling to the armboard — eliminating play and micro-vibrations.</p>
+        <div class="feat-spec">TOOL-FREE INSTALLATION</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🏆</div>
+        <div class="feat-title">Transforms Your Sound</div>
+        <p class="feat-desc">Perfect stylus angle = significant noise reduction, improved tonal balance, wider soundstage. Your tonearm's full potential — finally unlocked.</p>
+        <div class="feat-spec">WORLD-CLASS AUDIO QUALITY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW TO INSTALL ══ -->
+<section class="install">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Installation</div>
+      <h2 class="stitle">Up and running<br>in <em>minutes.</em></h2>
+      <p class="ssub">No special tools or expertise required. Follow these four simple steps.</p>
+    </div>
+    <div class="install-steps reveal">
+      <div class="install-step">
+        <div class="install-num">01</div>
+        <div class="install-title">Remove your tonearm</div>
+        <p class="install-desc">Carefully remove your existing tonearm from the armboard mounting position and set it safely aside.</p>
+      </div>
+      <div class="install-step">
+        <div class="install-num">02</div>
+        <div class="install-title">Mount the Easy VTA</div>
+        <p class="install-desc">Install the Easy VTA into the armboard hole. It creates a tight, rigid coupling — no play, no vibration transfer.</p>
+      </div>
+      <div class="install-step">
+        <div class="install-num">03</div>
+        <div class="install-title">Re-attach your tonearm</div>
+        <p class="install-desc">Slide your tonearm into the Easy VTA device and secure using the adjustment mechanism. No special tools needed.</p>
+      </div>
+      <div class="install-step">
+        <div class="install-num">04</div>
+        <div class="install-title">Find your sweet spot</div>
+        <p class="install-desc">Play a record and use the micrometer to adjust VTA while listening. Find the angle where your music sounds its absolute best.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Customer Reviews</div>
+      <h2 class="stitle">What audiophiles<br><em>are saying.</em></h2>
+    </div>
+    <div class="rev-grid reveal">
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Excellent quality and precision. The on-the-fly adjustment is a game changer — I can hear exactly what the change does to the sound in real time."</p>
+        <div class="rev-author">audiophile_uk_collector</div>
+        <div class="rev-source">Verified eBay Purchase</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Perfect fit for my Rega RB330. Build quality is outstanding — feels like a proper precision engineering product. The micrometer adjustment is silky smooth."</p>
+        <div class="rev-author">vinyl_enthusiast_de</div>
+        <div class="rev-source">Verified eBay Purchase</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"I was skeptical about VTA making a difference. After installing Easy VTA, the improvement in clarity and bass definition was immediately obvious."</p>
+        <div class="rev-author">hifi_serious_jp</div>
+        <div class="rev-source">Verified eBay Purchase</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Fast shipping to the US, beautifully packaged. Installed in under 15 minutes. The anodized finish is perfect and the sound improvement was immediately apparent."</p>
+        <div class="rev-author">records_and_tubes_usa</div>
+        <div class="rev-source">Verified Direct Purchase</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"Ordered directly — cheaper than eBay and just as fast. The seller was very helpful with my compatibility questions. Product exactly as described."</p>
+        <div class="rev-author">analog_purist_fr</div>
+        <div class="rev-source">Verified Direct Purchase</div>
+      </div>
+      <div class="rev-card">
+        <div class="rev-stars">★★★★★</div>
+        <p class="rev-text">"The Thomas Schick version fits perfectly. Machining is impeccable. You feel the quality immediately. If you have a Schick arm, this is essential."</p>
+        <div class="rev-author">schick_lover_nl</div>
+        <div class="rev-source">Verified eBay Purchase</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;" class="reveal">
+      <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="btn btn-outline">See all eBay reviews →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">FAQ</div>
+      <h2 class="stitle">Frequently asked<br><em>questions.</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Does VTA adjustment really make an audible difference?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Yes — especially with high-quality line-contact or microline stylus profiles. The angle determines how the stylus tip contacts the groove wall. Even small variations cause measurable changes in distortion, tonal balance, and soundstage depth. Many audiophiles report VTA adjustment as one of the most significant improvements to their vinyl playback.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What makes Easy VTA different from other VTA adjusters?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Easy VTA is engineered specifically for <strong>on-the-fly adjustment</strong> — you adjust while the record is playing and hear the change in real time. Two precision linear bearings create a solid, rattle-free mechanism. The custom micrometer with inverted analogue scale lets you make precise, repeatable adjustments and return to any known setting. All machined from aerospace-grade 6061 aluminium with military-spec anodizing.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Is my tonearm compatible?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Easy VTA currently supports: <code>Rega RB-330</code> · <code>Jelco SA-750D</code> · <code>Ortofon AS-309R</code> · <code>Sumiko Premier MMT</code> · <code>GrooveMaster</code> · <code>Thomas Schick</code> · <code>Sorane SA-1.2 / TA-1</code> · <code>Clearaudio</code> (Satisfy, Unify, Performance) · <code>SME Sliding Base</code>. Use the compatibility finder above or contact us if your tonearm isn't listed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Why is it cheaper to buy directly from this site?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">eBay charges sellers significant listing and transaction fees. When you purchase directly, those fees are not incurred — and we pass the saving on to you. The product is identical, ships from the same location, with the same care and after-sales support.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How long does shipping take?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">We ship worldwide, free of charge. Delivery typically takes 5–10 business days to most of Europe, and 7–14 business days to the US and further afield. We ship from Portugal. <strong>Note for US customers:</strong> please contact us before ordering to confirm current shipping arrangements in light of recent import regulation changes.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I place an order?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Currently, orders are placed via email to <code>query@easyvta.net</code> — simply tell us which device you need and we'll reply with payment instructions. We're working on integrating Stripe and PayPal for instant secure checkout — sign up to be notified when that launches.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">My tonearm isn't listed — can you make one?</span><span class="faq-icon">+</span></div>
+        <div class="faq-a">Contact us with your tonearm model and the pillar shaft diameter (in mm). We may be able to accommodate custom requests, or advise on the closest compatible device. We're continuously expanding the range of supported tonearms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAYMENT COMING SOON ══ -->
+<section class="payment" id="payment">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Checkout</div>
+      <h2 class="stitle">Secure online payment<br><em>coming soon.</em></h2>
+    </div>
+    <div class="payment-box reveal">
+      <div class="payment-badge"><span class="badge-pulse"></span>In Development</div>
+      <h3 class="payment-title">Stripe & PayPal Checkout</h3>
+      <p class="payment-sub">We're integrating secure online payment so you can order instantly, 24/7. Be the first to know when it launches.</p>
+      <div class="payment-methods">
+        <div class="payment-method">
+          <div class="pm-icon">💳</div>
+          <div><div class="pm-label">Stripe</div><div class="pm-sub">Card payments</div></div>
+        </div>
+        <div class="payment-method">
+          <div class="pm-icon">🅿️</div>
+          <div><div class="pm-label">PayPal</div><div class="pm-sub">PayPal & cards</div></div>
+        </div>
+        <div class="payment-method">
+          <div class="pm-icon">🔒</div>
+          <div><div class="pm-label">SSL Secured</div><div class="pm-sub">256-bit encryption</div></div>
+        </div>
+      </div>
+      <div class="payment-notify">
+        <input type="email" placeholder="your@email.com" id="notifyEmail">
+        <button class="payment-notify-btn" onclick="notifyMe()">Notify Me →</button>
+      </div>
+      <p class="payment-current">In the meantime, order via <a href="mailto:query@easyvta.net">email</a> or on <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay</a>. We reply within 24 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-row">
+      <div class="reveal">
+        <div class="stag">About Us</div>
+        <h2 class="stitle">Two friends.<br>One <em>obsession.</em></h2>
+        <p class="about-quote">"This started as a partnership between two friends who are passionate audiophiles."</p>
+        <p class="about-text">Easy VTA was born from frustration. We knew that VTA adjustment could transform a good turntable setup into something extraordinary — but the tools available were either crude, imprecise, or too complex.</p>
+        <p class="about-text">So we designed our own. Using aerospace-grade materials, precision machining, and military-spec finishing — all in a device that any audiophile can install and use in minutes.</p>
+        <p class="about-text">Every device is <strong>handcrafted in Portugal</strong>, tested personally, and packed with care. We're not a factory — we're two people who care deeply about the quality of your listening experience.</p>
+      </div>
+      <div class="reveal d2">
+        <div class="about-facts">
+          <div class="afact"><div class="afact-n">6061</div><div class="afact-l">Aluminium Grade</div></div>
+          <div class="afact"><div class="afact-n">MIL</div><div class="afact-l">Spec Anodizing</div></div>
+          <div class="afact"><div class="afact-n">8<sup>+</sup></div><div class="afact-l">Tonearm Models</div></div>
+          <div class="afact"><div class="afact-n">🌍</div><div class="afact-l">Ships Worldwide</div></div>
+        </div>
+        <div style="margin-top:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px;">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--amber);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Contact</div>
+          <a href="mailto:query@easyvta.net" style="display:block;font-size:14px;color:var(--text);text-decoration:none;margin-bottom:6px;">📧 query@easyvta.net</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" style="display:block;font-size:14px;color:var(--muted);text-decoration:none;">🛒 eBay: easy-vta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:44px;">
+      <div class="stag">Contact</div>
+      <h2 class="stitle">Questions?<br><em>We're here.</em></h2>
+      <p class="ssub">Whether you need help with compatibility, want to place an order, or just want to talk vinyl — get in touch.</p>
+    </div>
+    <div class="contact-row reveal">
+      <div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">✉️</div>
+          <div><div class="cinfo-label">Email</div><div class="cinfo-val"><a href="mailto:query@easyvta.net">query@easyvta.net</a></div></div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">🛒</div>
+          <div><div class="cinfo-label">eBay Store</div><div class="cinfo-val"><a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">easy-vta on eBay.co.uk</a></div></div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">⏱️</div>
+          <div><div class="cinfo-label">Response Time</div><div class="cinfo-val">Within 24 hours</div></div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon">🌍</div>
+          <div><div class="cinfo-label">Shipping</div><div class="cinfo-val">Free worldwide · Ships from Portugal</div></div>
+        </div>
+        <div class="order-note">
+          <div class="order-note-title">How to Order (For Now)</div>
+          <p>Email us with the product you want. We'll reply with payment instructions within 24 hours. Stripe/PayPal checkout coming soon.</p>
+        </div>
+      </div>
+      <div class="cform" id="cForm">
+        <div class="cform-title">Send a Message</div>
+        <form id="theForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+          <div class="fg">
+            <label>Subject</label>
+            <select name="subject">
+              <option value="">— Select topic —</option>
+              <option>Place an order</option>
+              <option>Compatibility question</option>
+              <option>Custom request</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us about your tonearm / turntable setup..." required></textarea></div>
+          <button type="submit" class="cform-btn" id="submitBtn">
+            Send Message
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <div class="cform-success" id="formOk">
+          <div style="font-size:40px;margin-bottom:12px;">✅</div>
+          <p style="font-family:var(--fh);font-size:18px;color:var(--text);">Message sent! We'll reply within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">Easy VTA</div>
+        <p class="footer-brand-desc">Precision Vertical Tracking Angle adjustment devices for audiophiles. Handcrafted in Portugal. Ships worldwide.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-col-links">
+          <li><a href="#products">For Rega RB-330</a></li>
+          <li><a href="#products">For Jelco SA-750D</a></li>
+          <li><a href="#products">For Sumiko MMT</a></li>
+          <li><a href="#products">For Thomas Schick</a></li>
+          <li><a href="#products">All Products</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Info</div>
+        <ul class="footer-col-links">
+          <li><a href="#what-is">What is VTA?</a></li>
+          <li><a href="#finder">Compatibility Finder</a></li>
+          <li><a href="#install">How to Install</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-col-links">
+          <li><a href="mailto:query@easyvta.net">query@easyvta.net</a></li>
+          <li><a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay Store</a></li>
+          <li><a href="#contact">Send a message</a></li>
+          <li><a href="#payment">Payment info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Easy VTA / AmBits · Handcrafted in Portugal · All rights reserved</div>
+      <div class="footer-ebay">Also on <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay → easy-vta</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60));
+function openMob() { document.getElementById('mob').classList.add('open'); }
+function closeMob() { document.getElementById('mob').classList.remove('open'); }
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+const products = {
+  rega:        { title:'Easy VTA for Rega RB-330', desc:'3-point armboard fixing. Perfect fit for the Rega RB-330.', price:'£150 — Free Shipping' },
+  jelco:       { title:'Easy VTA for Jelco SA-750D', desc:'18mm shaft. Also fits Ortofon AS-309R.', price:'£149 — Free Shipping' },
+  sumiko:      { title:'Easy VTA for Sumiko Premier MMT', desc:'16mm shaft. Designed for the Sumiko Premier MMT.', price:'£149 — Free Shipping' },
+  groovemaster:{ title:'Easy VTA for GrooveMaster', desc:'20.5mm shaft. For GrooveMaster with Jelco base.', price:'£175 — Free Shipping' },
+  schick:      { title:'Easy VTA for Thomas Schick', desc:'19mm shaft. Precision fit for Thomas Schick.', price:'£175 — Free Shipping' },
+  clearaudio:  { title:'Easy VTA for Clearaudio', desc:'25mm shaft. ⚠️ Currently out of stock — contact us to be notified.', price:'£235 — Out of Stock' },
+  sorane:      { title:'Easy VTA for Sorane SA-1.2', desc:'20mm shaft. For Sorane SA-1.2 and TA-1. ⚠️ Currently out of stock.', price:'£175 — Out of Stock' },
+  sme:         { title:'Easy VTA Sliding Mounting Base', desc:'20.5mm shaft. Premium sliding design.', price:'£225 — Free Shipping' }
+};
+
+function findProduct() {
+  const val = document.getElementById('finderSel').value;
+  const r = document.getElementById('finderResult');
+  if (!val) { r.classList.remove('show'); return; }
+  const p = products[val];
+  document.getElementById('frTitle').textContent = p.title;
+  document.getElementById('frDesc').textContent = p.desc;
+  document.getElementById('frPrice').textContent = p.price;
+  r.classList.add('show');
+}
+
+function notifyMe() {
+  const email = document.getElementById('notifyEmail').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  alert('Thank you! We\'ll notify you at ' + email + ' when direct payment launches.');
+  document.getElementById('notifyEmail').value = '';
+}
+
+const form = document.getElementById('theForm');
+if (form) {
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { form.style.display='none'; document.getElementById('formOk').style.display='block'; }
+      else { btn.disabled=false; btn.textContent='Try again'; }
+    } catch { btn.disabled=false; btn.textContent='Try again'; }
+  });
+}
+</script>
+</body>
+</html>
