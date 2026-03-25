@@ -1,0 +1,11 @@
+<div class="admin-page-header">
+  <div>
+    <h1>Edit Product</h1>
+    <p class="subtitle"><%= @product.name %></p>
+  </div>
+  <%= link_to "← Voltar", admin_products_path, class: "btn btn-outline" %>
+</div>
+
+<div class="admin-card">
+  <%= render "form", product: @product %>
+</div>

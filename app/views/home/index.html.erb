@@ -1,0 +1,505 @@
+<!-- Mobile menu -->
+<div class="mob-menu" id="mob">
+  <button class="mob-x" onclick="closeMob()">✕</button>
+  <a href="#what-is" onclick="closeMob()">What is VTA</a>
+  <a href="#finder" onclick="closeMob()">Find Mine</a>
+  <a href="#products" onclick="closeMob()">Products</a>
+  <a href="#reviews" onclick="closeMob()">Reviews</a>
+  <a href="#faq" onclick="closeMob()">FAQ</a>
+  <a href="#contact" onclick="closeMob()" style="color:var(--amber);margin-top:12px;">Contact</a>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <p>🎵 <strong>Lower prices when ordering direct</strong> — no eBay fees. Free worldwide shipping on all orders. <a href="#products">Shop now →</a></p>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-vinyl"></div>
+        <div class="nav-logo-text">
+          <div class="nav-logo-main">Easy VTA</div>
+          <div class="nav-logo-sub">Improving Sound</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#what-is">What is VTA</a></li>
+        <li><a href="#finder">Find Mine</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#products" class="nav-cta">Shop Now</a></li>
+      </ul>
+      <div class="burger" onclick="openMob()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-row">
+      <div>
+        <div class="hero-kicker">Precision Tonearm Tools · Handcrafted in Portugal</div>
+        <h1 class="hero-title">
+          Find your tonearm's<br><em>perfect angle.</em><br>On the fly.
+        </h1>
+        <p class="hero-sub">Micrometric VTA adjustment devices for serious audiophiles. Adjust the Vertical Tracking Angle while the record is playing — and hear the difference in real time.</p>
+        <div class="hero-btns">
+          <a href="#products" class="btn btn-amber">
+            Shop Products
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#finder" class="btn btn-outline">Find my model →</a>
+        </div>
+        <div class="hero-proof">
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>6061 Aluminium</strong> alloy body</span></div>
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>Military-spec</strong> anodized finish</span></div>
+          <div class="hero-proof-item"><span class="hero-proof-icon">✓</span><span class="hero-proof-text"><strong>Free</strong> worldwide shipping</span></div>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <div class="hero-product-frame">
+          <div class="hero-product-photo">
+            <div class="hero-product-photo-placeholder">
+              <span>🎚️</span>
+              <p>VTA ADJUSTMENT DEVICE</p>
+            </div>
+          </div>
+          <div class="hero-product-meta">
+            <div class="hero-product-from">// Starting from</div>
+            <div class="hero-product-price">£149 <span>eBay £165+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="wrap">
+      <div class="hero-stats-inner">
+        <div><div class="hstat-val">6061</div><div class="hstat-label">Aluminium Grade</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">MIL<sup>-SPEC</sup></div><div class="hstat-label">Anodized Finish</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">µm</div><div class="hstat-label">Micrometric Precision</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val"><%= @products.count %><sup>+</sup></div><div class="hstat-label">Tonearm Models</div></div>
+        <div class="hstat-div"></div>
+        <div><div class="hstat-val">Free</div><div class="hstat-label">Worldwide Shipping</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT IS VTA ══ -->
+<section class="what" id="what-is">
+  <div class="wrap">
+    <div class="what-row">
+      <div class="reveal">
+        <div class="stag">Understanding VTA</div>
+        <h2 class="stitle">Why does the<br><em>angle matter?</em></h2>
+        <p class="ssub">Your stylus reads the groove at a specific angle. Getting it exactly right — for each record — is the difference between good and extraordinary sound.</p>
+        <div class="what-items">
+          <div class="what-item">
+            <div class="what-num">VTA</div>
+            <div>
+              <div class="what-item-title">Vertical Tracking Angle</div>
+              <p class="what-item-desc">The angle the tonearm makes with the record surface when viewed from the side. Deviations of even fractions of a millimetre affect clarity, tonal balance and soundstage.</p>
+            </div>
+          </div>
+          <div class="what-item">
+            <div class="what-num">SRA</div>
+            <div>
+              <div class="what-item-title">Stylus Rake Angle</div>
+              <p class="what-item-desc">The angle of the stylus contact relative to the groove — ideally 92°. When wrong, you'll hear harshness, reduced bass definition, and a collapsed soundstage.</p>
+            </div>
+          </div>
+          <div class="what-item">
+            <div class="what-num">FLY</div>
+            <div>
+              <div class="what-item-title">On the Fly Adjustment</div>
+              <p class="what-item-desc">Easy VTA lets you adjust while the record plays. Hear the change in real time. Finding the "sweet spot" has never been this precise or enjoyable.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/mRUqiiXkmSM" title="Easy VTA in action" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <p class="video-cap">Watch Easy VTA in action — on the fly VTA adjustment while playing vinyl</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINDER ══ -->
+<section class="finder" id="finder">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Compatibility</div>
+      <h2 class="stitle">Which device<br>is <em>right for you?</em></h2>
+      <p class="ssub">Select your tonearm and we'll find the exact Easy VTA device you need.</p>
+    </div>
+    <div class="finder-box reveal">
+      <div class="finder-head">Tonearm Compatibility Finder</div>
+      <div class="finder-sub">SELECT YOUR TONEARM MODEL BELOW</div>
+      <div class="finder-row">
+        <select class="finder-sel" id="finderSel">
+          <option value="">— Select your tonearm —</option>
+          <% @products.each do |product| %>
+            <option value="<%= product.slug %>"
+              data-title="<%= h(product.name) %>"
+              data-desc="<%= h(product.description) %>"
+              data-price="<%= product.price %> — <%= product.in_stock? ? 'Free Shipping' : 'Out of Stock' %>"
+              data-status="<%= product.stock_status %>">
+              <%= product.tonearm_name.presence || product.name %>
+            </option>
+          <% end %>
+        </select>
+        <button class="finder-btn" onclick="findProduct()">Find My Device →</button>
+      </div>
+      <div class="finder-result" id="finderResult">
+        <div class="finder-res-tag">Recommended Device</div>
+        <div class="finder-res-title" id="frTitle"></div>
+        <div class="finder-res-desc" id="frDesc"></div>
+        <div class="finder-res-price" id="frPrice"></div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <a href="#products" class="btn btn-amber" style="font-size:13px;padding:10px 20px;">View Product</a>
+          <a href="mailto:query@easyvta.net" class="btn btn-outline" style="font-size:13px;padding:10px 20px;">Ask a Question</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTS ══ -->
+<section class="products" id="products">
+  <div class="wrap">
+    <div class="products-header reveal">
+      <div>
+        <div class="stag">Shop</div>
+        <h2 class="stitle">All <em>Products.</em></h2>
+      </div>
+      <p style="font-size:14px;color:var(--muted);font-weight:300;max-width:320px;line-height:1.7;">Direct purchase is cheaper than eBay — same product, same service, no platform fees.</p>
+    </div>
+    <div class="prod-grid reveal">
+      <% @products.each do |product| %>
+        <div class="prod-card <%= 'oos' unless product.in_stock? %> <%= 'featured' if product.featured? %>">
+          <% if product.featured? %>
+            <span class="prod-tag tag-feat">Premium</span>
+          <% elsif product.in_stock? %>
+            <span class="prod-tag tag-in">In Stock</span>
+          <% else %>
+            <span class="prod-tag tag-out">Out of Stock</span>
+          <% end %>
+
+          <% if product.shaft_size.present? %>
+            <div class="prod-shaft"><%= product.shaft_size %></div>
+          <% elsif product.mounting_type.present? %>
+            <div class="prod-shaft"><%= product.mounting_type %></div>
+          <% end %>
+
+          <div class="prod-name">For <%= product.tonearm_name.presence || product.name %></div>
+          <p class="prod-compat"><%= product.description %></p>
+          <div class="prod-price"><%= price_with_conversion(product.price_pence) %></div>
+
+          <% if product.in_stock? %>
+            <div class="prod-ship">✓ Free Worldwide Shipping</div>
+            <div class="prod-actions">
+              <%= link_to "Order Now", new_order_path(product_id: product.id), class: "prod-btn prod-btn-main" %>
+              <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="prod-btn prod-btn-ebay">eBay</a>
+            </div>
+          <% else %>
+            <div class="prod-ship" style="color:var(--dim);">Currently unavailable</div>
+            <div class="prod-actions">
+              <a href="mailto:query@easyvta.net?subject=Notify: <%= product.name %> back in stock" class="prod-btn prod-btn-notify">Notify Me</a>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="prod-empty">
+        <span style="font-size:36px;">🎵</span>
+        <div style="font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text);">Don't see yours?</div>
+        <p>Use the compatibility finder above or contact us — we'll help you find the right device for your setup.</p>
+        <a href="#finder" class="btn btn-amber" style="font-size:13px;padding:10px 20px;">Use Finder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FEATURES ══ -->
+<section class="features" id="features">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Engineering</div>
+      <h2 class="stitle">Built for<br><em>precision.</em></h2>
+      <p class="ssub">Every Easy VTA device is machined to exacting standards — because the difference between good and extraordinary is measured in micrometres.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card"><div class="feat-icon">⚙️</div><div class="feat-title">6061 Aluminium Alloy</div><p class="feat-desc">Aerospace-grade aluminium to ASTM B 209 standard. Rigid, lightweight, and resonance-free — it won't colour your sound.</p><div class="feat-spec">ASTM B 209 STANDARD</div></div>
+      <div class="feat-card"><div class="feat-icon">✨</div><div class="feat-title">Military-Grade Finish</div><p class="feat-desc">Glass bead blasting followed by MIL-A-8625 Type II anodizing. Hard, durable, and beautiful — looks as precise as it performs.</p><div class="feat-spec">MIL-A-8625 TYPE II</div></div>
+      <div class="feat-card"><div class="feat-icon">🔬</div><div class="feat-title">Micrometric Adjustment</div><p class="feat-desc">Custom micrometer with inverted analogue scale readout. Precise, repeatable increments — and return to any position at any time.</p><div class="feat-spec">INVERTED ANALOGUE READOUT</div></div>
+      <div class="feat-card"><div class="feat-icon">🎵</div><div class="feat-title">VTA on the Fly</div><p class="feat-desc">Two precision linear bearings create a rattle-free mechanism that adjusts while the record plays. Hear the sweet spot in real time.</p><div class="feat-spec">DUAL LINEAR BEARING SYSTEM</div></div>
+      <div class="feat-card"><div class="feat-icon">🔧</div><div class="feat-title">No Tools Required</div><p class="feat-desc">Installs in minutes without any special tools. Creates a rigid, tight coupling to the armboard — eliminating play and micro-vibrations.</p><div class="feat-spec">TOOL-FREE INSTALLATION</div></div>
+      <div class="feat-card"><div class="feat-icon">🏆</div><div class="feat-title">Transforms Your Sound</div><p class="feat-desc">Perfect stylus angle = significant noise reduction, improved tonal balance, wider soundstage. Your tonearm's full potential — finally unlocked.</p><div class="feat-spec">WORLD-CLASS AUDIO QUALITY</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW TO INSTALL ══ -->
+<section class="install">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Installation</div>
+      <h2 class="stitle">Up and running<br>in <em>minutes.</em></h2>
+      <p class="ssub">No special tools or expertise required. Follow these four simple steps.</p>
+    </div>
+    <div class="install-steps reveal">
+      <div class="install-step"><div class="install-num">01</div><div class="install-title">Remove your tonearm</div><p class="install-desc">Carefully remove your existing tonearm from the armboard mounting position and set it safely aside.</p></div>
+      <div class="install-step"><div class="install-num">02</div><div class="install-title">Mount the Easy VTA</div><p class="install-desc">Install the Easy VTA into the armboard hole. It creates a tight, rigid coupling — no play, no vibration transfer.</p></div>
+      <div class="install-step"><div class="install-num">03</div><div class="install-title">Re-attach your tonearm</div><p class="install-desc">Slide your tonearm into the Easy VTA device and secure using the adjustment mechanism. No special tools needed.</p></div>
+      <div class="install-step"><div class="install-num">04</div><div class="install-title">Find your sweet spot</div><p class="install-desc">Play a record and use the micrometer to adjust VTA while listening. Find the angle where your music sounds its absolute best.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ REVIEWS ══ -->
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Customer Reviews</div>
+      <h2 class="stitle">What audiophiles<br><em>are saying.</em></h2>
+    </div>
+    <div class="rev-grid reveal">
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Excellent quality and precision. The on-the-fly adjustment is a game changer — I can hear exactly what the change does to the sound in real time."</p><div class="rev-author">audiophile_uk_collector</div><div class="rev-source">Verified eBay Purchase</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Perfect fit for my Rega RB330. Build quality is outstanding — feels like a proper precision engineering product. The micrometer adjustment is silky smooth."</p><div class="rev-author">vinyl_enthusiast_de</div><div class="rev-source">Verified eBay Purchase</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"I was skeptical about VTA making a difference. After installing Easy VTA, the improvement in clarity and bass definition was immediately obvious."</p><div class="rev-author">hifi_serious_jp</div><div class="rev-source">Verified eBay Purchase</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Fast shipping to the US, beautifully packaged. Installed in under 15 minutes. The anodized finish is perfect and the sound improvement was immediately apparent."</p><div class="rev-author">records_and_tubes_usa</div><div class="rev-source">Verified Direct Purchase</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Ordered directly — cheaper than eBay and just as fast. The seller was very helpful with my compatibility questions. Product exactly as described."</p><div class="rev-author">analog_purist_fr</div><div class="rev-source">Verified Direct Purchase</div></div>
+      <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"The Thomas Schick version fits perfectly. Machining is impeccable. You feel the quality immediately. If you have a Schick arm, this is essential."</p><div class="rev-author">schick_lover_nl</div><div class="rev-source">Verified eBay Purchase</div></div>
+    </div>
+    <div style="text-align:center;margin-top:36px;" class="reveal">
+      <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" class="btn btn-outline">See all eBay reviews →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">FAQ</div>
+      <h2 class="stitle">Frequently asked<br><em>questions.</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Does VTA adjustment really make an audible difference?</span><span class="faq-icon">+</span></div><div class="faq-a">Yes — especially with high-quality line-contact or microline stylus profiles. The angle determines how the stylus tip contacts the groove wall. Even small variations cause measurable changes in distortion, tonal balance, and soundstage depth.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">What makes Easy VTA different from other VTA adjusters?</span><span class="faq-icon">+</span></div><div class="faq-a">Easy VTA is engineered specifically for <strong>on-the-fly adjustment</strong> — you adjust while the record is playing and hear the change in real time. Two precision linear bearings create a solid, rattle-free mechanism. All machined from aerospace-grade 6061 aluminium with military-spec anodizing.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Is my tonearm compatible?</span><span class="faq-icon">+</span></div><div class="faq-a">Use the compatibility finder above or contact us if your tonearm isn't listed. We're continuously expanding the range of supported tonearms.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Why is it cheaper to buy directly from this site?</span><span class="faq-icon">+</span></div><div class="faq-a">eBay charges sellers significant listing and transaction fees. When you purchase directly, those fees are not incurred — and we pass the saving on to you. The product is identical, ships from the same location, with the same care and after-sales support.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How long does shipping take?</span><span class="faq-icon">+</span></div><div class="faq-a">We ship worldwide, free of charge. Delivery typically takes 5–10 business days to most of Europe, and 7–14 business days to the US and further afield. We ship from Portugal.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">How do I place an order?</span><span class="faq-icon">+</span></div><div class="faq-a">Currently, orders are placed via email to <code>query@easyvta.net</code> — simply tell us which device you need and we'll reply with payment instructions.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">My tonearm isn't listed — can you make one?</span><span class="faq-icon">+</span></div><div class="faq-a">Contact us with your tonearm model and the pillar shaft diameter (in mm). We may be able to accommodate custom requests, or advise on the closest compatible device.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PAYMENT ══ -->
+<section class="payment" id="payment">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="stag">Checkout</div>
+      <h2 class="stitle">Secure online payment<br><em>coming soon.</em></h2>
+    </div>
+    <div class="payment-box reveal">
+      <div class="payment-badge"><span class="badge-pulse"></span>In Development</div>
+      <h3 class="payment-title">Stripe & PayPal Checkout</h3>
+      <p class="payment-sub">We're integrating secure online payment so you can order instantly, 24/7. Be the first to know when it launches.</p>
+      <div class="payment-methods">
+        <div class="payment-method"><div class="pm-icon">💳</div><div><div class="pm-label">Stripe</div><div class="pm-sub">Card payments</div></div></div>
+        <div class="payment-method"><div class="pm-icon">🅿️</div><div><div class="pm-label">PayPal</div><div class="pm-sub">PayPal & cards</div></div></div>
+        <div class="payment-method"><div class="pm-icon">🔒</div><div><div class="pm-label">SSL Secured</div><div class="pm-sub">256-bit encryption</div></div></div>
+      </div>
+      <div class="payment-notify">
+        <input type="email" placeholder="your@email.com" id="notifyEmail">
+        <button class="payment-notify-btn" onclick="notifyMe()">Notify Me →</button>
+      </div>
+      <p class="payment-current">In the meantime, order via <a href="mailto:query@easyvta.net">email</a> or on <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay</a>. We reply within 24 hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="about-row">
+      <div class="reveal">
+        <div class="stag">About Us</div>
+        <h2 class="stitle">Two friends.<br>One <em>obsession.</em></h2>
+        <p class="about-quote">"This started as a partnership between two friends who are passionate audiophiles."</p>
+        <div class="about-text">
+          <p>Easy VTA was born from frustration. We knew that VTA adjustment could transform a good turntable setup into something extraordinary — but the tools available were either crude, imprecise, or too complex.</p>
+          <p>So we designed our own. Using aerospace-grade materials, precision machining, and military-spec finishing — all in a device that any audiophile can install and use in minutes.</p>
+          <p>Every device is <strong>handcrafted in Portugal</strong>, tested personally, and packed with care. We're not a factory — we're two people who care deeply about the quality of your listening experience.</p>
+        </div>
+      </div>
+      <div class="reveal d2">
+        <div class="about-facts">
+          <div class="afact"><div class="afact-n">6061</div><div class="afact-l">Aluminium Grade</div></div>
+          <div class="afact"><div class="afact-n">MIL</div><div class="afact-l">Spec Anodizing</div></div>
+          <div class="afact"><div class="afact-n"><%= @products.count %><sup>+</sup></div><div class="afact-l">Tonearm Models</div></div>
+          <div class="afact"><div class="afact-n">🌍</div><div class="afact-l">Ships Worldwide</div></div>
+        </div>
+        <div style="margin-top:16px;background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px;">
+          <div style="font-family:var(--fm);font-size:10px;color:var(--amber);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:10px;">Contact</div>
+          <a href="mailto:query@easyvta.net" style="display:block;font-size:14px;color:var(--text);text-decoration:none;margin-bottom:6px;">📧 query@easyvta.net</a>
+          <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank" style="display:block;font-size:14px;color:var(--muted);text-decoration:none;">🛒 eBay: easy-vta</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:44px;">
+      <div class="stag">Contact</div>
+      <h2 class="stitle">Questions?<br><em>We're here.</em></h2>
+      <p class="ssub">Whether you need help with compatibility, want to place an order, or just want to talk vinyl — get in touch.</p>
+    </div>
+    <div class="contact-row reveal">
+      <div>
+        <div class="cinfo-item"><div class="cinfo-icon">✉️</div><div><div class="cinfo-label">Email</div><div class="cinfo-val"><a href="mailto:query@easyvta.net">query@easyvta.net</a></div></div></div>
+        <div class="cinfo-item"><div class="cinfo-icon">🛒</div><div><div class="cinfo-label">eBay Store</div><div class="cinfo-val"><a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">easy-vta on eBay.co.uk</a></div></div></div>
+        <div class="cinfo-item"><div class="cinfo-icon">⏱️</div><div><div class="cinfo-label">Response Time</div><div class="cinfo-val">Within 24 hours</div></div></div>
+        <div class="cinfo-item"><div class="cinfo-icon">🌍</div><div><div class="cinfo-label">Shipping</div><div class="cinfo-val">Free worldwide · Ships from Portugal</div></div></div>
+        <div class="order-note">
+          <div class="order-note-title">How to Order (For Now)</div>
+          <p>Email us with the product you want. We'll reply with payment instructions within 24 hours. Stripe/PayPal checkout coming soon.</p>
+        </div>
+      </div>
+      <div class="cform" id="cForm">
+        <div class="cform-title">Send a Message</div>
+        <form id="theForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required></div>
+          <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required></div>
+          <div class="fg">
+            <label>Subject</label>
+            <select name="subject">
+              <option value="">— Select topic —</option>
+              <option>Place an order</option>
+              <option>Compatibility question</option>
+              <option>Custom request</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us about your tonearm / turntable setup..." required></textarea></div>
+          <button type="submit" class="cform-btn" id="submitBtn">
+            Send Message
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <div class="cform-success" id="formOk">
+          <div style="font-size:40px;margin-bottom:12px;">✅</div>
+          <p style="font-family:var(--fh);font-size:18px;color:var(--text);">Message sent! We'll reply within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">Easy VTA</div>
+        <p class="footer-brand-desc">Precision Vertical Tracking Angle adjustment devices for audiophiles. Handcrafted in Portugal. Ships worldwide.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-col-links">
+          <% @products.first(5).each do |product| %>
+            <li><a href="#products">For <%= product.tonearm_name.presence || product.name %></a></li>
+          <% end %>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Info</div>
+        <ul class="footer-col-links">
+          <li><a href="#what-is">What is VTA?</a></li>
+          <li><a href="#finder">Compatibility Finder</a></li>
+          <li><a href="#install">How to Install</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-col-links">
+          <li><a href="mailto:query@easyvta.net">query@easyvta.net</a></li>
+          <li><a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay Store</a></li>
+          <li><a href="#contact">Send a message</a></li>
+          <li><a href="#payment">Payment info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© <%= Date.current.year %> Easy VTA / AmBits · Handcrafted in Portugal · All rights reserved</div>
+      <div class="footer-ebay">Also on <a href="https://www.ebay.co.uk/usr/easy-vta" target="_blank">eBay → easy-vta</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('stuck', scrollY > 60));
+function openMob() { document.getElementById('mob').classList.add('open'); }
+function closeMob() { document.getElementById('mob').classList.remove('open'); }
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }), { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+function findProduct() {
+  const sel = document.getElementById('finderSel');
+  const opt = sel.options[sel.selectedIndex];
+  const r = document.getElementById('finderResult');
+  if (!sel.value) { r.classList.remove('show'); return; }
+  document.getElementById('frTitle').textContent = opt.dataset.title;
+  document.getElementById('frDesc').textContent = opt.dataset.desc;
+  document.getElementById('frPrice').textContent = opt.dataset.price;
+  r.classList.add('show');
+}
+
+function notifyMe() {
+  const email = document.getElementById('notifyEmail').value;
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  alert('Thank you! We\'ll notify you at ' + email + ' when direct payment launches.');
+  document.getElementById('notifyEmail').value = '';
+}
+
+const form = document.getElementById('theForm');
+if (form) {
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { form.style.display='none'; document.getElementById('formOk').style.display='block'; }
+      else { btn.disabled=false; btn.textContent='Try again'; }
+    } catch { btn.disabled=false; btn.textContent='Try again'; }
+  });
+}
+</script>

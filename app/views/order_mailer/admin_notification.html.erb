@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container { max-width: 600px; margin: 20px auto; }
+    .header { background: #1a1a2e; color: white; padding: 20px; }
+    .body { padding: 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #C8820A; color: white; padding: 8px; text-align: left; }
+    td { padding: 8px; border-bottom: 1px solid #eee; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; background: #C8820A; color: white; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2 style="margin:0">New Order Received</h2>
+    </div>
+    <div class="body">
+      <p><span class="badge"><%= @order.reference %></span> received on <%= @order.created_at.strftime("%d/%m/%Y at %H:%M") %></p>
+
+      <h3>Customer</h3>
+      <table>
+        <tr><td><strong>Name</strong></td><td><%= @order.customer_name %></td></tr>
+        <tr><td><strong>Email</strong></td><td><%= @order.customer_email %></td></tr>
+        <tr><td><strong>Phone</strong></td><td><%= @order.customer_phone.presence || "—" %></td></tr>
+        <tr><td><strong>Address</strong></td><td><%= [@order.address_line1, @order.address_line2, "#{@order.postal_code} #{@order.city}", @order.country].compact_blank.join(", ") %></td></tr>
+      </table>
+
+      <h3>Items</h3>
+      <table>
+        <thead><tr><th>Product</th><th>Qty</th><th>Subtotal</th></tr></thead>
+        <tbody>
+          <% @order.order_items.each do |item| %>
+          <tr><td><%= item.product_name %></td><td><%= item.quantity %></td><td><%= item.subtotal %></td></tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p><strong>Total: <%= @order.total %></strong></p>
+
+      <% if @order.customer_notes.present? %>
+      <p><strong>Customer notes:</strong> <%= @order.customer_notes %></p>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>

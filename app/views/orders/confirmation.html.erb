@@ -1,0 +1,48 @@
+<section class="confirmation-page">
+  <div class="container">
+    <div class="confirmation-card">
+      <div class="confirmation-icon">✓</div>
+      <h1>Order Received!</h1>
+      <p class="confirmation-subtitle">Thank you for your order, <strong><%= @order.customer_name %></strong>.</p>
+
+      <div class="reference-box">
+        <span class="ref-label">Reference</span>
+        <span class="ref-number"><%= @order.reference %></span>
+      </div>
+
+      <p class="confirmation-message">
+        We've sent a confirmation email to <strong><%= @order.customer_email %></strong>.<br>
+        We will be in touch shortly to confirm dispatch.
+      </p>
+
+      <div class="order-details-summary">
+        <h3>Order Summary</h3>
+        <% @order.order_items.each do |item| %>
+          <div class="order-item-row">
+            <span><%= item.product_name %> × <%= item.quantity %></span>
+            <span><%= item.subtotal %></span>
+          </div>
+        <% end %>
+        <div class="order-item-row order-total-row">
+          <span><strong>Total</strong></span>
+          <span><strong><%= @order.total %></strong></span>
+        </div>
+      </div>
+
+      <div class="delivery-summary">
+        <h3>Delivery Address</h3>
+        <address>
+          <%= @order.customer_name %><br>
+          <%= @order.address_line1 %><br>
+          <% if @order.address_line2.present? %><%= @order.address_line2 %><br><% end %>
+          <%= @order.postal_code %> <%= @order.city %><br>
+          <%= @order.country %>
+        </address>
+      </div>
+
+      <div class="confirmation-actions">
+        <%= link_to "← Back to Home", root_path, class: "btn-back" %>
+      </div>
+    </div>
+  </div>
+</section>

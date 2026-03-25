@@ -1,0 +1,12 @@
+New Order: <%= @order.reference %>
+Date: <%= @order.created_at.strftime("%d/%m/%Y at %H:%M") %>
+
+Customer: <%= @order.customer_name %>
+Email: <%= @order.customer_email %>
+Address: <%= @order.address_line1 %>, <%= @order.postal_code %> <%= @order.city %>
+
+Items:
+<% @order.order_items.each do |item| %>
+- <%= item.product_name %> x<%= item.quantity %> — <%= item.subtotal %>
+<% end %>
+Total: <%= @order.total %>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: 'DM Sans', Arial, sans-serif; color: #2C2820; background: #FAF8F4; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .header { background: #1a1a2e; color: white; padding: 32px; text-align: center; }
+    .header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+    .header p { margin: 8px 0 0; color: #C8820A; font-size: 14px; }
+    .body { padding: 32px; }
+    .body h2 { color: #C8820A; font-size: 20px; margin-top: 0; }
+    .info-box { background: #FAF8F4; border-left: 4px solid #C8820A; padding: 16px; margin: 16px 0; border-radius: 0 4px 4px 0; }
+    .info-box p { margin: 4px 0; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+    th { background: #1a1a2e; color: white; padding: 10px 12px; text-align: left; font-size: 13px; }
+    td { padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 14px; }
+    .total { font-weight: bold; font-size: 16px; color: #C8820A; }
+    .footer { background: #f5f5f5; padding: 24px; text-align: center; font-size: 12px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Easy VTA</h1>
+      <p>Order Received</p>
+    </div>
+    <div class="body">
+      <h2>Thank you for your order, <%= @order.customer_name %>!</h2>
+      <p>We have received your order and will be in touch shortly to confirm dispatch.</p>
+
+      <div class="info-box">
+        <p><strong>Reference:</strong> <%= @order.reference %></p>
+        <p><strong>Date:</strong> <%= @order.created_at.strftime("%d/%m/%Y at %H:%M") %></p>
+      </div>
+
+      <h3>Items Ordered</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Unit Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |item| %>
+          <tr>
+            <td><%= item.product_name %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.unit_price %></td>
+            <td><%= item.subtotal %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td colspan="3" style="text-align: right; font-weight: bold;">Total:</td>
+            <td class="total"><%= @order.total %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Delivery Address</h3>
+      <div class="info-box">
+        <p><%= @order.customer_name %></p>
+        <p><%= @order.address_line1 %></p>
+        <% if @order.address_line2.present? %><p><%= @order.address_line2 %></p><% end %>
+        <p><%= @order.postal_code %> <%= @order.city %></p>
+        <p><%= @order.country %></p>
+        <% if @order.customer_phone.present? %><p>Tel: <%= @order.customer_phone %></p><% end %>
+      </div>
+
+      <% if @order.customer_notes.present? %>
+      <h3>Notes</h3>
+      <div class="info-box">
+        <p><%= @order.customer_notes %></p>
+      </div>
+      <% end %>
+
+      <p style="margin-top: 24px; font-size: 14px; color: #666;">If you have any questions, please reply to this email or contact us.</p>
+    </div>
+    <div class="footer">
+      <p>Easy VTA &mdash; Precision Tonearm Adjustment</p>
+      <p>This email was sent automatically. Please do not reply directly.</p>
+    </div>
+  </div>
+</body>
+</html>
