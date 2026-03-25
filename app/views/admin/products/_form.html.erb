@@ -1,0 +1,100 @@
+<%= form_with model: [:admin, product], class: "product-form", multipart: true do |f| %>
+  <% if product.errors.any? %>
+    <div class="form-errors">
+      <h3><%= pluralize(product.errors.count, "error") %> found:</h3>
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <%= f.label :name, "Product Name" %>
+      <%= f.text_field :name, placeholder: "Ex: Easy VTA for Rega RB-330", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :slug, "Slug (URL)" %>
+      <%= f.text_field :slug, placeholder: "rega-rb-330", class: "form-control" %>
+      <small class="form-hint">Leave blank to auto-generate</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :tonearm_name, "Tonearm Name" %>
+      <%= f.text_field :tonearm_name, placeholder: "Ex: Rega RB-330", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :shaft_size, "Shaft Size" %>
+      <%= f.text_field :shaft_size, placeholder: "Ex: 18mm", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :mounting_type, "Mounting Type" %>
+      <%= f.text_field :mounting_type, placeholder: "Ex: 3-point", class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :price_pence, "Price (in pence)" %>
+      <%= f.number_field :price_pence, min: 1, step: 1, placeholder: "15000 = £150", class: "form-control" %>
+      <small class="form-hint">Enter value in pence. E.g. £150 = 15000</small>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :stock_status, "Stock Status" %>
+      <%= f.select :stock_status, [["In Stock", "in_stock"], ["Out of Stock", "out_of_stock"], ["Coming Soon", "coming_soon"]], {}, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :position, "List Position" %>
+      <%= f.number_field :position, min: 1, step: 1, class: "form-control" %>
+    </div>
+
+    <div class="form-group form-full">
+      <%= f.label :description, "Description" %>
+      <%= f.text_area :description, rows: 4, placeholder: "Technical description of the product...", class: "form-control" %>
+    </div>
+
+    <div class="form-group form-full">
+      <%= f.label :notes, "Internal Notes" %>
+      <%= f.text_area :notes, rows: 3, placeholder: "Internal notes (not visible on site)...", class: "form-control" %>
+    </div>
+
+    <div class="form-group form-full">
+      <%= f.label :image, "Product Image" %>
+
+      <% if product.image.attached? %>
+        <div class="image-preview" style="margin-bottom: 0.5rem;">
+          <%= image_tag product.image.variant(resize_to_limit: [200, 200]), alt: product.name, style: "max-width: 200px; max-height: 200px; display: block; border-radius: 4px;" %>
+        </div>
+        <div class="form-check" style="margin-bottom: 0.5rem;">
+          <%= f.check_box :remove_image, { id: "remove_image" } %>
+          <%= f.label :remove_image, "Remove current image", for: "remove_image" %>
+        </div>
+      <% end %>
+
+      <%= f.file_field :image, accept: "image/*", class: "form-control" %>
+    </div>
+
+    <div class="form-group form-full">
+      <%= f.label :image_url, "Or use external URL (optional)" %>
+      <%= f.url_field :image_url, placeholder: "https://...", class: "form-control" %>
+      <small class="form-hint">Used only if no image is uploaded above</small>
+    </div>
+
+    <div class="form-group form-checkbox">
+      <%= f.label :featured do %>
+        <%= f.check_box :featured %>
+        <span>Featured product</span>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit product.new_record? ? "Create Product" : "Save Changes", class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_products_path, class: "btn btn-outline" %>
+  </div>
+<% end %>

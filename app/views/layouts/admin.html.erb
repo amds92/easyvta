@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy VTA — Admin</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "admin", media: "all" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="admin-body">
+    <nav class="admin-nav">
+      <div class="admin-nav-brand">
+        <span class="brand-logo">⚙</span>
+        <span class="brand-name">Easy VTA Admin</span>
+      </div>
+      <div class="admin-nav-links">
+        <%= link_to "Dashboard", admin_root_path, class: "nav-link #{'active' if controller_name == 'dashboard'}" %>
+        <%= link_to "Products", admin_products_path, class: "nav-link #{'active' if controller_name == 'products'}" %>
+        <%= link_to "Orders", admin_orders_path, class: "nav-link #{'active' if controller_name == 'orders'}" %>
+        <%= link_to "View Site", root_path, class: "nav-link", target: "_blank" %>
+        <%= button_to "Logout", session_path, method: :delete, class: "btn-logout" %>
+      </div>
+    </nav>
+
+    <main class="admin-main">
+      <% if notice %>
+        <div class="flash flash-notice"><%= notice %></div>
+      <% end %>
+      <% if alert %>
+        <div class="flash flash-alert"><%= alert %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

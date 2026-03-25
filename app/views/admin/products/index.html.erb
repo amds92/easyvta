@@ -1,0 +1,66 @@
+<div class="admin-page-header">
+  <div>
+    <h1>Products</h1>
+    <p class="subtitle"><%= @products.count %> products in catalogue</p>
+  </div>
+  <%= link_to "New Product", new_admin_product_path, class: "btn btn-primary" %>
+</div>
+
+<div class="admin-card">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th style="width: 40px">#</th>
+        <th style="width: 60px">Image</th>
+        <th>Product</th>
+        <th>Tonearm</th>
+        <th>Shaft</th>
+        <th>Mounting</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Featured</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="products-list">
+      <% @products.each do |product| %>
+        <tr id="product-<%= product.id %>">
+          <td class="text-muted"><%= product.position %></td>
+          <td>
+            <% if product.image.attached? %>
+              <%= image_tag product.image.variant(resize_to_limit: [50, 50]), alt: product.name, style: "width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" %>
+            <% elsif product.image_url.present? %>
+              <%= image_tag product.image_url, alt: product.name, style: "width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" %>
+            <% else %>
+              <span class="text-muted" style="font-size: 0.75rem;">No image</span>
+            <% end %>
+          </td>
+          <td>
+            <strong><%= product.name %></strong>
+          </td>
+          <td><%= product.tonearm_name %></td>
+          <td><%= product.shaft_size %></td>
+          <td><%= product.mounting_type %></td>
+          <td><strong><%= product.price %></strong></td>
+          <td>
+            <%= render "stock_badge", product: product %>
+          </td>
+          <td>
+            <% if product.featured? %>
+              <span class="badge badge-amber">⭐ Featured</span>
+            <% else %>
+              <span class="text-muted">—</span>
+            <% end %>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <%= link_to "Edit", edit_admin_product_path(product), class: "btn btn-sm btn-outline" %>
+              <%= button_to product.in_stock? ? "Out of Stock" : "In Stock", toggle_stock_admin_product_path(product), method: :patch, class: "btn btn-sm #{product.in_stock? ? 'btn-outline-red' : 'btn-outline-green'}" %>
+              <%= button_to "Delete", admin_product_path(product), method: :delete, form: { data: { turbo_confirm: "Are you sure you want to delete \"#{product.name}\"?" } }, class: "btn btn-sm btn-danger" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

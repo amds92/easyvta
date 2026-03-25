@@ -1,0 +1,137 @@
+<section class="order-page">
+  <div class="container">
+    <div class="order-layout">
+      <!-- Product Summary -->
+      <div class="order-summary">
+        <h2 class="section-tag">Summary</h2>
+        <div class="product-card-order">
+          <% if @product.image.attached? %>
+            <%= image_tag @product.image.variant(resize_to_limit: [300, 300]), alt: @product.name, class: "product-order-img" %>
+          <% elsif @product.respond_to?(:image_url) && @product.image_url.present? %>
+            <%= image_tag @product.image_url, alt: @product.name, class: "product-order-img" %>
+          <% end %>
+          <h3><%= @product.name %></h3>
+          <% if @product.tonearm_name.present? %>
+            <p class="tonearm-label">For: <strong><%= @product.tonearm_name %></strong></p>
+          <% end %>
+          <div class="price-big"><%= @product.price %></div>
+          <%= render "admin/products/stock_badge", product: @product %>
+        </div>
+        <div class="secure-note">
+          <span>🔒</span>
+          <p>Your data is handled securely and confidentially.</p>
+        </div>
+      </div>
+
+      <!-- Order Form -->
+      <div class="order-form-wrap">
+        <h1 class="order-title">Order Details</h1>
+
+        <%= form_with url: orders_path, method: :post, class: "order-form" do |f| %>
+          <%= hidden_field_tag :product_id, @product.id %>
+
+          <% if @order.errors.any? %>
+            <div class="form-errors">
+              <ul>
+                <% @order.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <fieldset class="form-section">
+            <legend>Personal Details</legend>
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="order_customer_name">Full Name *</label>
+                <input type="text" name="order[customer_name]" id="order_customer_name" value="<%= @order.customer_name %>" placeholder="John Smith" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="order_customer_email">Email *</label>
+                <input type="email" name="order[customer_email]" id="order_customer_email" value="<%= @order.customer_email %>" placeholder="john@example.com" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="order_customer_phone">Phone</label>
+                <input type="tel" name="order[customer_phone]" id="order_customer_phone" value="<%= @order.customer_phone %>" placeholder="+44 7700 900123" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="order_quantity">Quantity</label>
+                <select name="quantity" id="order_quantity" class="form-control">
+                  <% (1..5).each do |q| %><option value="<%= q %>"><%= q %></option><% end %>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Delivery Address</legend>
+            <div class="form-grid-2">
+              <div class="form-group form-full">
+                <label for="order_address_line1">Address *</label>
+                <input type="text" name="order[address_line1]" id="order_address_line1" value="<%= @order.address_line1 %>" placeholder="123 High Street" class="form-control" required>
+              </div>
+              <div class="form-group form-full">
+                <label for="order_address_line2">Address line 2</label>
+                <input type="text" name="order[address_line2]" id="order_address_line2" value="<%= @order.address_line2 %>" placeholder="Flat 4B" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="order_city">City *</label>
+                <input type="text" name="order[city]" id="order_city" value="<%= @order.city %>" placeholder="London" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="order_postal_code">Postal Code *</label>
+                <input type="text" name="order[postal_code]" id="order_postal_code" value="<%= @order.postal_code %>" placeholder="SW1A 1AA" class="form-control" required>
+              </div>
+              <div class="form-group form-full">
+                <label for="order_country">Country *</label>
+                <select name="order[country]" id="order_country" class="form-control">
+                  <option value="United Kingdom" <%= "selected" if @order.country == "United Kingdom" || @order.country.blank? %>>United Kingdom</option>
+                  <option value="Portugal" <%= "selected" if @order.country == "Portugal" %>>Portugal</option>
+                  <option value="Spain" <%= "selected" if @order.country == "Spain" %>>Spain</option>
+                  <option value="France" <%= "selected" if @order.country == "France" %>>France</option>
+                  <option value="Germany" <%= "selected" if @order.country == "Germany" %>>Germany</option>
+                  <option value="Netherlands" <%= "selected" if @order.country == "Netherlands" %>>Netherlands</option>
+                  <option value="Italy" <%= "selected" if @order.country == "Italy" %>>Italy</option>
+                  <option value="Other" <%= "selected" if @order.country == "Other" %>>Other</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Notes (optional)</legend>
+            <div class="form-group">
+              <textarea name="order[customer_notes]" id="order_customer_notes" rows="3" placeholder="Special delivery instructions, etc..." class="form-control"><%= @order.customer_notes %></textarea>
+            </div>
+          </fieldset>
+
+          <div class="order-total-bar">
+            <span>Estimated total:</span>
+            <span class="order-total-price" id="total-display"><%= @product.price %></span>
+          </div>
+
+          <button type="submit" class="btn-order">
+            Place Order
+          </button>
+
+          <p class="order-disclaimer">After placing your order you will receive a confirmation email. Payment will be arranged directly.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const pricePerUnit = <%= @product.price_pence %>;
+  const qtySelect = document.getElementById('order_quantity');
+  const totalDisplay = document.getElementById('total-display');
+
+  function updateTotal() {
+    const qty = parseInt(qtySelect.value);
+    const total = (pricePerUnit * qty / 100).toFixed(2);
+    totalDisplay.textContent = '£' + total;
+  }
+
+  qtySelect.addEventListener('change', updateTotal);
+</script>

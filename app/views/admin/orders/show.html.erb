@@ -1,0 +1,91 @@
+<div class="page-header">
+  <div>
+    <h1>Order <code><%= @order.reference %></code></h1>
+    <p class="page-subtitle"><%= @order.created_at.strftime("%B %d, %Y at %H:%M") %></p>
+  </div>
+  <div>
+    <%= link_to "← All Orders", admin_orders_path, class: "btn btn-outline" %>
+  </div>
+</div>
+
+<div class="order-show-grid">
+  <!-- Left column: items + status -->
+  <div>
+    <div class="admin-card">
+      <h3>Items</h3>
+      <table class="admin-table">
+        <thead>
+          <tr><th>Product</th><th>Qty</th><th>Unit Price</th><th>Subtotal</th></tr>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |item| %>
+            <tr>
+              <td>
+                <strong><%= item.product_name %></strong><br>
+                <% if item.product %>
+                  <small><%= link_to "View product", edit_admin_product_path(item.product), style: "color: #C8820A" %></small>
+                <% end %>
+              </td>
+              <td><%= item.quantity %></td>
+              <td><%= item.unit_price %></td>
+              <td><strong><%= item.subtotal %></strong></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3" style="text-align:right; font-weight: bold; padding: 12px;">Total:</td>
+            <td style="font-weight: bold; font-size: 1.1rem; color: #C8820A; padding: 12px;"><%= @order.total %></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="admin-card" style="margin-top: 1.5rem;">
+      <h3>Update Status</h3>
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <span class="badge badge-<%= @order.status_color %>" style="font-size: 1rem; padding: 6px 16px;"><%= @order.status_label %></span>
+        <%= form_with url: update_status_admin_order_path(@order), method: :patch, style: "display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;" do |f| %>
+          <%= f.select :status, [
+            ["Pending", "pending"],
+            ["Confirmed", "confirmed"],
+            ["Shipped", "shipped"],
+            ["Delivered", "delivered"],
+            ["Cancelled", "cancelled"]
+          ], { selected: @order.status }, class: "form-control", style: "width: auto;" %>
+          <%= f.submit "Update", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right column: customer info -->
+  <div>
+    <div class="admin-card">
+      <h3>Customer Details</h3>
+      <dl class="info-list">
+        <dt>Name</dt><dd><%= @order.customer_name %></dd>
+        <dt>Email</dt><dd><a href="mailto:<%= @order.customer_email %>"><%= @order.customer_email %></a></dd>
+        <dt>Phone</dt><dd><%= @order.customer_phone.presence || "—" %></dd>
+      </dl>
+    </div>
+
+    <div class="admin-card" style="margin-top: 1.5rem;">
+      <h3>Delivery Address</h3>
+      <address style="font-style: normal; line-height: 1.7;">
+        <%= @order.customer_name %><br>
+        <%= @order.address_line1 %><br>
+        <% if @order.address_line2.present? %><%= @order.address_line2 %><br><% end %>
+        <%= @order.postal_code %> <%= @order.city %><br>
+        <%= @order.country %>
+      </address>
+    </div>
+
+    <% if @order.customer_notes.present? %>
+    <div class="admin-card" style="margin-top: 1.5rem;">
+      <h3>Customer Notes</h3>
+      <p style="color: #555;"><%= @order.customer_notes %></p>
+    </div>
+    <% end %>
+  </div>
+</div>

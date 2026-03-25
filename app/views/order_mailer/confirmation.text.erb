@@ -1,0 +1,23 @@
+Easy VTA — Order Received
+================================
+
+Thank you for your order, <%= @order.customer_name %>!
+
+Reference: <%= @order.reference %>
+Date: <%= @order.created_at.strftime("%d/%m/%Y at %H:%M") %>
+
+ITEMS:
+<% @order.order_items.each do |item| %>
+- <%= item.product_name %> x<%= item.quantity %> — <%= item.subtotal %>
+<% end %>
+Total: <%= @order.total %>
+
+DELIVERY ADDRESS:
+<%= @order.customer_name %>
+<%= @order.address_line1 %>
+<% if @order.address_line2.present? %><%= @order.address_line2 %><% end %>
+<%= @order.postal_code %> <%= @order.city %>
+<%= @order.country %>
+
+We will be in touch shortly.
+Easy VTA

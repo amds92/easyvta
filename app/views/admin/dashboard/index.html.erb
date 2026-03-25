@@ -1,0 +1,103 @@
+<div class="admin-page-header">
+  <h1>Dashboard</h1>
+  <p class="subtitle">Easy VTA Overview</p>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-number"><%= @total_products %></div>
+    <div class="stat-label">Total Products</div>
+  </div>
+  <div class="stat-card stat-green">
+    <div class="stat-number"><%= @in_stock_count %></div>
+    <div class="stat-label">In Stock</div>
+  </div>
+  <div class="stat-card stat-red">
+    <div class="stat-number"><%= @out_of_stock_count %></div>
+    <div class="stat-label">Out of Stock</div>
+  </div>
+  <div class="stat-card stat-amber">
+    <div class="stat-number"><%= @coming_soon_count %></div>
+    <div class="stat-label">Coming Soon</div>
+  </div>
+</div>
+
+<div class="admin-section" style="margin-bottom: 2rem;">
+  <div class="section-header">
+    <h2>Recent Orders</h2>
+    <%= link_to "View All", admin_orders_path, class: "btn btn-primary btn-sm" %>
+  </div>
+  <% if @recent_orders.any? %>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Reference</th>
+          <th>Customer</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @recent_orders.each do |order| %>
+          <tr>
+            <td><code><%= order.reference %></code></td>
+            <td><%= order.customer_name %></td>
+            <td><%= order.total %></td>
+            <td><span class="badge badge-<%= order.status_color %>"><%= order.status_label %></span></td>
+            <td><small><%= order.created_at.strftime("%d/%m/%Y") %></small></td>
+            <td><%= link_to "View", admin_order_path(order), class: "btn btn-outline btn-sm" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p style="color: #888; padding: 1rem 0;">No orders yet.</p>
+  <% end %>
+</div>
+
+<div class="admin-section">
+  <div class="section-header">
+    <h2>Quick Stock</h2>
+    <%= link_to "Manage Products", admin_products_path, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Featured</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td>
+            <div class="product-cell">
+              <strong><%= product.name %></strong>
+              <small class="text-muted"><%= product.tonearm_name %></small>
+            </div>
+          </td>
+          <td><%= product.price %></td>
+          <td>
+            <%= render "admin/products/stock_badge", product: product %>
+          </td>
+          <td>
+            <% if product.featured? %>
+              <span class="badge badge-amber">Featured</span>
+            <% end %>
+          </td>
+          <td>
+            <%= button_to toggle_stock_admin_product_path(product), method: :patch, class: "btn btn-sm #{product.in_stock? ? 'btn-outline-red' : 'btn-outline-green'}" do %>
+              <%= product.in_stock? ? "Mark Out of Stock" : "Mark In Stock" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
